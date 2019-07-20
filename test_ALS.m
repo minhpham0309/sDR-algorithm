@@ -1,4 +1,4 @@
-% sir-DR algorithm test
+% sDR algorithm test
 % Minh Pham, UCLA mathematics 
 
 %%
@@ -40,10 +40,7 @@ ePIE_inputs.Iterations = 300;
 % syntax: ePIE(ePIE_inputs, beta_obj_c=0.05, beta_ap);
 % beta_obj_c = 1-beta_obj: their paper use opposite meaning
 
-%[big_obj2,aperture2,fourier_error2,initial_obj2,initial_aperture2] = rPIE(ePIE_inputs,0.1,0.05);
-ePIE_inputs.InitialObj = big_obj3;
-ePIE_inputs.InitialAp  = aperture3;
-[big_obj2,aperture2,fourier_error2,initial_obj2,initial_aperture2] = rPIE_probe_strip(ePIE_inputs,0.2,0.05);
+[big_obj2,aperture2,fourier_error2,initial_obj2,initial_aperture2] = rPIE(ePIE_inputs,0.1,0.05);
 
 %% DR reconstruction
 % syntax with default parameters: 
@@ -72,9 +69,8 @@ ePIE_inputs.InitialAp  = aperture3;
 % Hence sir-DR will run with momentum=0 in the first 20 iterations for stabilty setup first.
 
 %[big_obj3,aperture3,fourier_error3,initial_obj3,initial_aperture3] = DRb(ePIE_inputs, 0.6, 0.02, 0.7);
-%[big_obj3,aperture3,fourier_error3,initial_obj3,initial_aperture3] = DRb(ePIE_inputs, 0.8, 0.05, 0.7);
-[big_obj3,aperture3,fourier_error3,initial_obj3,initial_aperture3] = DRb_probe_strip(ePIE_inputs, 0.8, 0.05, 0.5);
-
+%[big_obj3,aperture3,fourier_error3,initial_obj3,initial_aperture3] = DRb(ePIE_inputs, 0.8, 0.05, .7);
+[big_obj3,aperture3,fourier_error3,initial_obj3,initial_aperture3] = DRb(ePIE_inputs, 0.6, 0.05, 0.8);
 %% show results
 % .87 .98 1, 0 0.02 0.05 for 40_300
 % 1 0.97 0.97
@@ -82,46 +78,46 @@ obj = big_obj(221:520,181:480);
 obj2 = big_obj2(221:520,181:480);
 obj3 = big_obj3(221:520,181:480);
 
-min1 = min(abs(obj(:))) +0.00; max1 = .97*max(abs(obj(:)));
-min2 = min(abs(obj2(:)))+0.0; max2 = .96*max(abs(obj2(:)));
+min1 = min(abs(obj(:))) +0.0; max1 = max(abs(obj(:)));
+min2 = min(abs(obj2(:)))+0.0; max2 = max(abs(obj2(:)));
 min3 = min(abs(obj3(:)))+0.0; max3 = max(abs(obj3(:)));
 
 figure(12);img(obj,'colormap','gray','caxis',[min1 max1]);
-set(gca, 'visible', 'off');
+%set(gca, 'visible', 'off');
 figure(22);img(obj2,'colormap','gray','caxis',[min2 max2]);
-set(gca, 'visible', 'off');
+%set(gca, 'visible', 'off');
 figure(32);img(obj3,'colormap','gray','caxis',[min3 max3]);
-set(gca, 'visible', 'off');
+%set(gca, 'visible', 'off');
 
 figure(11);img(big_obj,'colormap','gray','caxis',[min1 max1]);
-set(gca, 'visible', 'off');
+%set(gca, 'visible', 'off');
 figure(21);img(big_obj2,'colormap','gray','caxis',[min2 max2]);
-set(gca, 'visible', 'off');
+%set(gca, 'visible', 'off');
 figure(31);img(big_obj3,'colormap','gray','caxis',[min3*1.2 max3]);
-set(gca, 'visible', 'off');
+%set(gca, 'visible', 'off');
 
 %%
-rec_px_size = 5.5274e-09;%m
-scale_bar_length2 = 500e-9;
-scale_bar_length3 = 200e-9;
-
-[ys2, xs2] = size(big_obj);
-[ys3, xs3] = size(obj);
-
-x_pos2 = 0.6;
-y_pos2 = 0.97;
-x_pos3 = 0.6;
-y_pos3 = 0.97;
-
-
-figure(11);hold on;
-line([round(xs2*x_pos2) round(xs2*x_pos2 + scale_bar_length2 ./ rec_px_size)],...
-    [round(ys2*y_pos2) round(ys2*y_pos2)], 'LineWidth', 10, 'Color', 'k');
-hold off;
-
-figure(12);hold on;
-line([round(xs3*x_pos3) round(xs3*x_pos3 + scale_bar_length3 ./ rec_px_size)],...
-    [round(ys3*y_pos3) round(ys3*y_pos3)], 'LineWidth', 10, 'Color', 'k');
-hold off;
+% rec_px_size = 5.5274e-09;%m
+% scale_bar_length2 = 500e-9;
+% scale_bar_length3 = 200e-9;
+% 
+% [ys2, xs2] = size(big_obj);
+% [ys3, xs3] = size(obj);
+% 
+% x_pos2 = 0.6;
+% y_pos2 = 0.97;
+% x_pos3 = 0.6;
+% y_pos3 = 0.97;
+% 
+% 
+% figure(11);hold on;
+% line([round(xs2*x_pos2) round(xs2*x_pos2 + scale_bar_length2 ./ rec_px_size)],...
+%     [round(ys2*y_pos2) round(ys2*y_pos2)], 'LineWidth', 10, 'Color', 'k');
+% hold off;
+% 
+% figure(12);hold on;
+% line([round(xs3*x_pos3) round(xs3*x_pos3 + scale_bar_length3 ./ rec_px_size)],...
+%     [round(ys3*y_pos3) round(ys3*y_pos3)], 'LineWidth', 10, 'Color', 'k');
+% hold off;
 
 
